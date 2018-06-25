@@ -16,7 +16,7 @@ namespace API_Testing
 {
     public partial class Form1 : Form
     {
-        public volatile static string apikey = "RGAPI-3710baab-7446-431c-9231-891592a94d62";
+        public volatile static string apikey = "";
         public static string league_version = "8.11.1";
         public static string region = "eun1";
         public static ChampionListDto champions;
