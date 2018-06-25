@@ -46,6 +46,8 @@
             this.accIdBox = new System.Windows.Forms.TextBox();
             this.quitBtn = new System.Windows.Forms.Button();
             this.crntMtchBtn = new System.Windows.Forms.Button();
+            this.seriesInfoLbl = new System.Windows.Forms.Label();
+            this.seriesInfoSttc = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.smnrIcon)).BeginInit();
             this.SuspendLayout();
             // 
@@ -177,7 +179,7 @@
             // accIdLblSttc
             // 
             this.accIdLblSttc.AutoSize = true;
-            this.accIdLblSttc.Location = new System.Drawing.Point(12, 150);
+            this.accIdLblSttc.Location = new System.Drawing.Point(12, 177);
             this.accIdLblSttc.Name = "accIdLblSttc";
             this.accIdLblSttc.Size = new System.Drawing.Size(64, 13);
             this.accIdLblSttc.TabIndex = 0;
@@ -188,7 +190,7 @@
             this.accIdBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.accIdBox.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.accIdBox.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.accIdBox.Location = new System.Drawing.Point(75, 150);
+            this.accIdBox.Location = new System.Drawing.Point(75, 177);
             this.accIdBox.Name = "accIdBox";
             this.accIdBox.ReadOnly = true;
             this.accIdBox.Size = new System.Drawing.Size(125, 14);
@@ -218,6 +220,23 @@
             this.crntMtchBtn.UseVisualStyleBackColor = true;
             this.crntMtchBtn.Click += new System.EventHandler(this.crntMtchBtn_Click);
             // 
+            // seriesInfoLbl
+            // 
+            this.seriesInfoLbl.AutoSize = true;
+            this.seriesInfoLbl.Location = new System.Drawing.Point(80, 150);
+            this.seriesInfoLbl.Name = "seriesInfoLbl";
+            this.seriesInfoLbl.Size = new System.Drawing.Size(0, 13);
+            this.seriesInfoLbl.TabIndex = 1;
+            // 
+            // seriesInfoSttc
+            // 
+            this.seriesInfoSttc.AutoSize = true;
+            this.seriesInfoSttc.Location = new System.Drawing.Point(11, 150);
+            this.seriesInfoSttc.Name = "seriesInfoSttc";
+            this.seriesInfoSttc.Size = new System.Drawing.Size(63, 13);
+            this.seriesInfoSttc.TabIndex = 5;
+            this.seriesInfoSttc.Text = "Series Info:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -225,6 +244,7 @@
             this.ClientSize = new System.Drawing.Size(429, 369);
             this.ControlBox = false;
             this.Controls.Add(this.rgnBox);
+            this.Controls.Add(this.seriesInfoSttc);
             this.Controls.Add(this.smnrRankSttc);
             this.Controls.Add(this.smnrIcon);
             this.Controls.Add(this.quitBtn);
@@ -232,6 +252,7 @@
             this.Controls.Add(this.fetchBtn);
             this.Controls.Add(this.accIdBox);
             this.Controls.Add(this.smnrIdBox);
+            this.Controls.Add(this.seriesInfoLbl);
             this.Controls.Add(this.smnrNameInput);
             this.Controls.Add(this.smnrRankLbl);
             this.Controls.Add(this.smnrLvlLbl);
@@ -270,6 +291,8 @@
         private System.Windows.Forms.TextBox accIdBox;
         private System.Windows.Forms.Button quitBtn;
         private System.Windows.Forms.Button crntMtchBtn;
+        private System.Windows.Forms.Label seriesInfoLbl;
+        private System.Windows.Forms.Label seriesInfoSttc;
     }
 }
 

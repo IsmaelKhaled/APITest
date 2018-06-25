@@ -9,3 +9,4 @@ c:\users\ismael\documents\visual studio 2013\Projects\API_Testing\API_Testing\bi
 c:\users\ismael\documents\visual studio 2013\Projects\API_Testing\API_Testing\bin\Debug\Newtonsoft.Json.xml
 c:\users\ismael\documents\visual studio 2013\Projects\API_Testing\API_Testing\obj\Debug\API_Testing.exe
 c:\users\ismael\documents\visual studio 2013\Projects\API_Testing\API_Testing\obj\Debug\API_Testing.pdb
+C:\Users\Ismael\documents\visual studio 2013\Projects\API_Testing\API_Testing\obj\Debug\API_Testing.CurrentMatch.resources

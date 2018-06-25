@@ -9,21 +9,33 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 using Newtonsoft.Json;
+using System.Net.Mail;
 
 
 namespace API_Testing
 {
     public partial class Form1 : Form
     {
-        public static string apikey = "";
+        public volatile static string apikey = "RGAPI-3710baab-7446-431c-9231-891592a94d62";
         public static string league_version = "8.11.1";
         public static string region = "eun1";
         public static ChampionListDto champions;
         public Form1()
         {
             InitializeComponent();
-           // crntMtchBtn.Hide();
             parseChamps();
+        }
+        public void mailUser(string email, string message)
+        {
+            
+            MailMessage msg = new MailMessage("penguin.2010@hotmail.com", email, "API Testing Mail", message);
+            SmtpClient client = new SmtpClient("smtp.live.com");
+            client.Port = 587;
+            string password = System.IO.File.ReadAllText(@"C:\Users\Ismael\Desktop\password.txt");
+            client.Credentials = new System.Net.NetworkCredential("penguin.2010@hotmail.com",password);
+            client.EnableSsl=true;
+            client.Send(msg);
+            MessageBox.Show("Message sent!");
         }
         public static bool parseChamps()
         {
@@ -81,28 +93,85 @@ namespace API_Testing
             }
             return default(T);
         }
-
-        public static string getRank(long summonerID)
+        public static string replaceRank(string rank)
         {
-            //Get league/rank info
+            if (rank == "I")
+                return "1";
+            else if (rank == "II")
+                return "2";
+            else if (rank == "III")
+                return "3";
+            else if (rank == "IV")
+                return "4";
+            else
+                return "5";
+
+
+        }
+
+        public static List<LeaguePositionDTO> getRankInfo(long summonerID)
+        {
             string rankURL = "https://"+region+".api.riotgames.com/lol/league/v3/positions/by-summoner/" + summonerID.ToString() + "?api_key=" + apikey;
             string rankJSON = fetchJSON(rankURL);
-            int queueindex = 0;
-            
+
             if (rankJSON.Contains("tier"))
             {
                 List<LeaguePositionDTO> user_rank = deserJSON<List<LeaguePositionDTO>>(rankURL);
+                return user_rank;
+            }
+            return null;
+        }
+        public static string getSeriesInfo(List<LeaguePositionDTO> user_rank)
+        {
+            int queueindex = 0;
+            if (user_rank != null)
+            {
+
                 if (user_rank.Count >= 2)
                 {
                     while (user_rank[queueindex].queueType != "RANKED_SOLO_5x5") //Find the index for soloq
                     {
                         queueindex++;
                     }
-                    return user_rank[queueindex].tier + " " + user_rank[queueindex].rank + " " + user_rank[queueindex].leaguePoints + "LP";
+                    MiniSeriesDTO series = user_rank[queueindex].miniSeries;
+                    if (series != null)
+                        //return series.wins.ToString() + "W/" + series.losses.ToString() + "L out of " + series.targ;
+                        return series.progress;
+                    else
+                        return "No series";
+                }
+                else if (user_rank[queueindex].queueType == "RANKED_SOLO_5x5")
+                {
+                    MiniSeriesDTO series = user_rank[queueindex].miniSeries;
+                    if (series != null)
+                        return series.progress;
+                    else
+                        return "No series";
+                }
+            }
+            return "Unranked";
+        }
+        public static string getSoloRank(List<LeaguePositionDTO> user_rank)
+        {
+            //Get league/rank info
+            //string rankURL = "https://"+region+".api.riotgames.com/lol/league/v3/positions/by-summoner/" + summonerID.ToString() + "?api_key=" + apikey;
+            //string rankJSON = fetchJSON(rankURL);
+            int queueindex = 0;
+            
+            if (user_rank != null)
+            {
+                
+                if (user_rank.Count >= 2)
+                {
+                    while (user_rank[queueindex].queueType != "RANKED_SOLO_5x5") //Find the index for soloq
+                    {
+                        queueindex++;
+                    }
+                    return user_rank[queueindex].tier[0] + replaceRank(user_rank[queueindex].rank) + " " + user_rank[queueindex].leaguePoints + "LP";
                 }
                 else if(user_rank[queueindex].queueType=="RANKED_SOLO_5x5")
                     {
-                        return user_rank[queueindex].tier + " " + user_rank[queueindex].rank + " " + user_rank[queueindex].leaguePoints + "LP";
+                        return user_rank[queueindex].tier[0] + replaceRank(user_rank[queueindex].rank) + " " + user_rank[queueindex].leaguePoints + "LP";
                     }
                 return "Unranked";
 
@@ -110,6 +179,7 @@ namespace API_Testing
             else
                 return "Unranked";
         }
+
         public static SummonerDTO fetchSmnrInfo(string smnrName)
         {
             //Fetch SummonerDTO from API
@@ -134,7 +204,9 @@ namespace API_Testing
                 smnrIcon.Size = new Size(128, 128);
                 string iconURL = "http://ddragon.leagueoflegends.com/cdn/" + league_version + "/img/profileicon/" + icon.ToString() + ".png";
                 smnrIcon.Load(iconURL);
-                smnrRankLbl.Text = getRank(user.id);
+                List<LeaguePositionDTO> rankInfo = getRankInfo(user.id);
+                smnrRankLbl.Text = getSoloRank(rankInfo);
+                seriesInfoLbl.Text = getSeriesInfo(rankInfo);
                }   
         }
 

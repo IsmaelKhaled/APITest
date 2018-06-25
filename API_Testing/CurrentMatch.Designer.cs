@@ -60,6 +60,7 @@
             this.tm2smr3 = new System.Windows.Forms.Button();
             this.tm2smr2 = new System.Windows.Forms.Button();
             this.tm2smr1 = new System.Windows.Forms.Button();
+            this.loadingLbl = new System.Windows.Forms.Label();
             this.team1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tm1smr5ico)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tm1smr4ico)).BeginInit();
@@ -434,6 +435,17 @@
             this.tm2smr1.TextAlign = System.Drawing.ContentAlignment.TopRight;
             this.tm2smr1.UseVisualStyleBackColor = true;
             // 
+            // loadingLbl
+            // 
+            this.loadingLbl.AutoSize = true;
+            this.loadingLbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.loadingLbl.Font = new System.Drawing.Font("Century", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.loadingLbl.Location = new System.Drawing.Point(86, 461);
+            this.loadingLbl.Name = "loadingLbl";
+            this.loadingLbl.Size = new System.Drawing.Size(164, 38);
+            this.loadingLbl.TabIndex = 1;
+            this.loadingLbl.Text = "Loading...";
+            // 
             // CurrentMatch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -441,6 +453,7 @@
             this.ClientSize = new System.Drawing.Size(340, 508);
             this.Controls.Add(this.team2);
             this.Controls.Add(this.team1);
+            this.Controls.Add(this.loadingLbl);
             this.Name = "CurrentMatch";
             this.ShowIcon = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
@@ -460,6 +473,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.tm2smr4ico)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tm2smr5ico)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -497,5 +511,6 @@
         private System.Windows.Forms.Label tm2smr3Rnk;
         private System.Windows.Forms.Label tm2smr2Rnk;
         private System.Windows.Forms.Label tm2smr1Rnk;
+        private System.Windows.Forms.Label loadingLbl;
     }
 }

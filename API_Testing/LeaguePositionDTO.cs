@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace API_Testing
 {
-    class LeaguePositionDTO
+    public class LeaguePositionDTO
     {
         public string rank { get; set; }
         public string queueType { get; set; }
@@ -26,7 +26,7 @@ namespace API_Testing
 
 
     }
-    class MiniSeriesDTO
+    public class MiniSeriesDTO
     {
         public int wins { get; set; }
         public int losses { get; set; }
