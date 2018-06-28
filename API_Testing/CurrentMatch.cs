@@ -18,13 +18,19 @@ namespace API_Testing
         List<string> summonerNames1 = new List<string>();
         List<string> champIcon1 = new List<string>();
         List<string> summonerRank1 = new List<string>();
+        List<string> perkStyles1 = new List<string>();
+        List<string> perkSStyles1 = new List<string>();
+        List<List<long>> perks1 = new List<List<long>>();
 
         List<long> summonerIds2 = new List<long>();
         List<string> summonerNames2 = new List<string>();
         List<string> champIcon2 = new List<string>();
         List<string> summonerRank2 = new List<string>();
+        List<string> perkStyles2 = new List<string>();
+        List<string> perkSStyles2 = new List<string>();
+        List<List<long>> perks2 = new List<List<long>>();
 
-        public CurrentMatch(string summonerId)
+        public CurrentMatch(string summonerId) //For your use, you should edit all directory pathes to point to the correct folders, most image files are kept in the images folder in the directory
         {
             InitializeComponent();
             //Fetch current game and parse JSON
@@ -51,9 +57,9 @@ namespace API_Testing
                         summonerNames1.Add(prtcpnt.summonerName);
                         ChampionDto champ = Form1.champions.data[prtcpnt.championId.ToString()];
                         string champname = champ.key;
-                        if (System.IO.File.Exists(@"C:\Users\Ismael\Documents\Visual Studio 2013\Projects\API_Testing\API_Testing\champicons\" + champname + ".png"))
+                        if (System.IO.File.Exists(@"C:\Users\Ismael\Documents\Visual Studio 2013\Projects\API_Testing\API_Testing\images\champicons\" + champname + ".png"))
                         {
-                            string champIcon = "C:\\Users\\Ismael\\Documents\\Visual Studio 2013\\Projects\\API_Testing\\API_Testing\\champicons\\" + champname + ".png";
+                            string champIcon = "C:\\Users\\Ismael\\Documents\\Visual Studio 2013\\Projects\\API_Testing\\API_Testing\\images\\champicons\\" + champname + ".png";
                             champIcon1.Add(champIcon);
                         }
                         else
@@ -64,6 +70,10 @@ namespace API_Testing
                                 champIcon1.Add("C:\\Users\\Ismael\\Documents\\Visual Studio 2013\\Projects\\API_Testing\\API_Testing\\champicons\\" + champname + ".png");
                             }
                         }
+                        perkStyles1.Add(@"C:\Users\Ismael\Desktop\perkStyle\" + prtcpnt.perks.perkStyle.ToString() + ".png");
+                        perkSStyles1.Add(@"C:\Users\Ismael\Desktop\perkStyle\" + prtcpnt.perks.perkSubStyle.ToString() + ".png");
+                        perks1.Add(prtcpnt.perks.perkIds);
+
                         List<LeaguePositionDTO> rankInfo = Form1.getRankInfo(prtcpnt.summonerId);
                         summonerRank1.Add(Form1.getSoloRank(rankInfo));
                     }
@@ -73,39 +83,47 @@ namespace API_Testing
                         summonerNames2.Add(prtcpnt.summonerName);
                         ChampionDto champ = Form1.champions.data[prtcpnt.championId.ToString()];
                         string champname = champ.key;
-                        if (System.IO.File.Exists(@"C:\Users\Ismael\Documents\Visual Studio 2013\Projects\API_Testing\API_Testing\champicons\" + champname + ".png"))
+                        if (System.IO.File.Exists(@"C:\Users\Ismael\Documents\Visual Studio 2013\Projects\API_Testing\API_Testing\images\champicons\" + champname + ".png"))
                         {
-                            string champIcon = "C:\\Users\\Ismael\\Documents\\Visual Studio 2013\\Projects\\API_Testing\\API_Testing\\champicons\\" + champname + ".png";
+                            string champIcon = "C:\\Users\\Ismael\\Documents\\Visual Studio 2013\\Projects\\API_Testing\\API_Testing\\images\\champicons\\" + champname + ".png";
                             champIcon2.Add(champIcon);
                         }
                         else
                         {
                             using (WebClient wc = new WebClient())
                             {
-                                wc.DownloadFile("http://ddragon.leagueoflegends.com/cdn/" + Form1.league_version + "/img/champion/" + champname + ".png", "C:\\Users\\Ismael\\Documents\\Visual Studio 2013\\Projects\\API_Testing\\API_Testing\\champicons\\" + champname + ".png");
+                                wc.DownloadFile("http://ddragon.leagueoflegends.com/cdn/" + Form1.league_version + "/img/champion/" + champname + ".png", "C:\\Users\\Ismael\\Documents\\Visual Studio 2013\\Projects\\API_Testing\\API_Testing\\images\\champicons\\" + champname + ".png");
                                 champIcon2.Add("C:\\Users\\Ismael\\Documents\\Visual Studio 2013\\Projects\\API_Testing\\API_Testing\\champicons\\" + champname + ".png");
                             }
                         }
+                        perkStyles2.Add(@"C:\Users\Ismael\Documents\Visual Studio 2013\Projects\API_Testing\API_Testing\images\perkStyle\" + prtcpnt.perks.perkStyle.ToString() + ".png");
+                        perkSStyles2.Add(@"C:\Users\Ismael\Documents\Visual Studio 2013\Projects\API_Testing\API_Testing\images\perkStyle\" + prtcpnt.perks.perkSubStyle.ToString() + ".png");
+                        perks2.Add(prtcpnt.perks.perkIds);
+
                         List<LeaguePositionDTO> rankInfo = Form1.getRankInfo(prtcpnt.summonerId);
                         summonerRank2.Add(Form1.getSoloRank(rankInfo));
                     }
                 }
+
                 
 
                 setTeam(1);
                 setTeam(2);
 
+                setPerks(1);
+                setPerks(2);
+
                 loadingLbl.Hide();
                 team1.Show();
                 team2.Show();
-                
+
 
                 //Show form after data is set
             }
 
 
         }
-        public void setTeam(int teamId)
+        public void setTeam(int teamId)//Set team members' names/icons/ranks
         {
             if (teamId == 1)
             {
@@ -148,8 +166,83 @@ namespace API_Testing
                 tm2smr5Rnk.Text = summonerRank2[4];
 
             }
-        } //Set team members' names/icons/ranks
+        }
+
+        public void setPerks(int teamId)
+        {
+            if (teamId == 1)
+            {
+                for (int i = 1; i <= 5; i++) // set picture boxes for runes
+                {
+                    List<string> perkLocs = new List<string>();
+                    foreach (long perk in perks1[i-1])
+                    {
+                        perkLocs.Add(@"C:\Users\Ismael\Documents\Visual Studio 2013\Projects\API_Testing\API_Testing\images\perk\" + perk + ".png");
+                    }
+                    for (int j = 1; j <= 6; j++)
+                    {
+                        PictureBox perk = this.Controls.Find("perk" + i.ToString() + "_" + j.ToString(), true).FirstOrDefault() as PictureBox;
+                        perk.Load(perkLocs[j - 1]);
+                    }
+                }
+
+                perkStyle1.Load(perkStyles1[0]);
+                perkSStyle1.Load(perkSStyles1[0]);
+
+                perkStyle2.Load(perkStyles1[1]);
+                perkSStyle2.Load(perkSStyles1[1]);
+
+                perkStyle3.Load(perkStyles1[2]);
+                perkSStyle3.Load(perkSStyles1[2]);
+
+                perkStyle4.Load(perkStyles1[3]);
+                perkSStyle4.Load(perkSStyles1[3]);
+
+                perkStyle5.Load(perkStyles1[4]);
+                perkSStyle5.Load(perkSStyles1[4]);
+               
+            }
+            else
+            {
+                for (int i = 6; i <= 10; i++) // set picture boxes for runes
+                {
+                    List<string> perkLocs = new List<string>();
+                    foreach (long perk in perks2[i - 6])
+                    {
+                        perkLocs.Add(@"C:\Users\Ismael\Desktop\perk\" + perk + ".png");
+                    }
+                    for (int j = 1; j <= 6; j++)
+                    {
+                        PictureBox perk = this.Controls.Find("perk" + i.ToString() + "_" + j.ToString(), true).FirstOrDefault() as PictureBox;
+                        perk.Load(perkLocs[j - 1]);
+                    }
+                }
+
+                perkStyle6.Load(perkStyles2[0]);
+                perkSStyle6.Load(perkSStyles2[0]);
+
+                perkStyle7.Load(perkStyles2[1]);
+                perkSStyle7.Load(perkSStyles2[1]);
+
+                perkStyle8.Load(perkStyles2[2]);
+                perkSStyle8.Load(perkSStyles2[2]);
+
+                perkStyle9.Load(perkStyles2[3]);
+                perkSStyle9.Load(perkSStyles2[3]);
+
+                perkStyle10.Load(perkStyles2[4]);
+                perkSStyle10.Load(perkSStyles2[4]);
+            }
 
 
+        }
+
+
+        private void perkStyle1_MouseHover(object sender, EventArgs e)
+        {
+            System.Windows.Forms.ToolTip ToolTip1 = new System.Windows.Forms.ToolTip();
+            ToolTip1.SetToolTip(this.perkStyle1, "Wassuh cuh");
+        } 
+        
     }
     }

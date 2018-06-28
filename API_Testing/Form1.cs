@@ -16,8 +16,8 @@ namespace API_Testing
 {
     public partial class Form1 : Form
     {
-        public volatile static string apikey = "RGAPI-3710baab-7446-431c-9231-891592a94d62";
-        public static string league_version = "8.11.1";
+        public volatile static string apikey = "RGAPI-eb5dc7e5-52dd-40d9-a462-db1939502dad";
+        public static string league_version = "8.13.1";
         public static string region = "eun1";
         public static ChampionListDto champions;
         public Form1()
@@ -32,7 +32,7 @@ namespace API_Testing
             SmtpClient client = new SmtpClient("smtp.live.com");
             client.Port = 587;
             string password = System.IO.File.ReadAllText(@"C:\Users\Ismael\Desktop\password.txt");
-            client.Credentials = new System.Net.NetworkCredential("penguin.2010@hotmail.com",password);
+            //client.Credentials = new System.Net.NetworkCredential("penguin.2010@hotmail.com",password);
             client.EnableSsl=true;
             client.Send(msg);
             MessageBox.Show("Message sent!");
