@@ -16,7 +16,7 @@ namespace API_Testing
 {
     public partial class Form1 : Form
     {
-        public volatile static string apikey = "RGAPI-3710baab-7446-431c-9231-891592a94d62";
+        public volatile static string apikey = "RGAPI-d8f20174-e26e-4356-86a7-9110ed0bcf5a";
         public static string league_version = "8.13.1";
         public static string region = "eun1";
         public static ChampionListDto champions;
@@ -27,23 +27,23 @@ namespace API_Testing
         }
         public void mailUser(string email, string message)
         {
-            
+
             MailMessage msg = new MailMessage("penguin.2010@hotmail.com", email, "API Testing Mail", message);
             SmtpClient client = new SmtpClient("smtp.live.com");
             client.Port = 587;
             string password = System.IO.File.ReadAllText(@"C:\Users\Ismael\Desktop\password.txt");
-            client.Credentials = new System.Net.NetworkCredential("penguin.2010@hotmail.com",password);
-            client.EnableSsl=true;
+            //client.Credentials = new System.Net.NetworkCredential("penguin.2010@hotmail.com", password);
+            client.EnableSsl = true;
             client.Send(msg);
             MessageBox.Show("Message sent!");
         }
         public static bool parseChamps()
         {
-            if(!System.IO.File.Exists(@"C:\Users\Ismael\Desktop\champs.txt"))
+            if (!System.IO.File.Exists(@"C:\Users\Ismael\Desktop\champs.txt"))
             {
                 string champURL = "https://" + region + ".api.riotgames.com/lol/static-data/v3/champions?locale=en_US&dataById=true" + "&api_key=" + apikey;
                 string champJSON = fetchJSON(champURL);
-                System.IO.File.WriteAllText(@"C:\Users\Ismael\Desktop\champs.txt",champJSON);
+                System.IO.File.WriteAllText(@"C:\Users\Ismael\Desktop\champs.txt", champJSON);
                 champions = parseJSON<ChampionListDto>(champJSON);
                 return false;
             }
@@ -111,7 +111,7 @@ namespace API_Testing
 
         public static List<LeaguePositionDTO> getRankInfo(long summonerID)
         {
-            string rankURL = "https://"+region+".api.riotgames.com/lol/league/v3/positions/by-summoner/" + summonerID.ToString() + "?api_key=" + apikey;
+            string rankURL = "https://" + region + ".api.riotgames.com/lol/league/v3/positions/by-summoner/" + summonerID.ToString() + "?api_key=" + apikey;
             string rankJSON = fetchJSON(rankURL);
 
             if (rankJSON.Contains("tier"))
@@ -157,10 +157,10 @@ namespace API_Testing
             //string rankURL = "https://"+region+".api.riotgames.com/lol/league/v3/positions/by-summoner/" + summonerID.ToString() + "?api_key=" + apikey;
             //string rankJSON = fetchJSON(rankURL);
             int queueindex = 0;
-            
+
             if (user_rank != null)
             {
-                
+
                 if (user_rank.Count >= 2)
                 {
                     while (user_rank[queueindex].queueType != "RANKED_SOLO_5x5") //Find the index for soloq
@@ -169,10 +169,10 @@ namespace API_Testing
                     }
                     return user_rank[queueindex].tier[0] + replaceRank(user_rank[queueindex].rank) + " " + user_rank[queueindex].leaguePoints + "LP";
                 }
-                else if(user_rank[queueindex].queueType=="RANKED_SOLO_5x5")
-                    {
-                        return user_rank[queueindex].tier[0] + replaceRank(user_rank[queueindex].rank) + " " + user_rank[queueindex].leaguePoints + "LP";
-                    }
+                else if (user_rank[queueindex].queueType == "RANKED_SOLO_5x5")
+                {
+                    return user_rank[queueindex].tier[0] + replaceRank(user_rank[queueindex].rank) + " " + user_rank[queueindex].leaguePoints + "LP";
+                }
                 return "Unranked";
 
             }
@@ -192,7 +192,7 @@ namespace API_Testing
         private void fetchBtn_Click(object sender, EventArgs e)
         {
             string smnrName = smnrNameInput.Text; //Fetch name from input box
-            SummonerDTO user =  fetchSmnrInfo(smnrName); //Fetch data from API
+            SummonerDTO user = fetchSmnrInfo(smnrName); //Fetch data from API
             //Start displaying fetched data
             if (user != null)
             {
@@ -207,7 +207,7 @@ namespace API_Testing
                 List<LeaguePositionDTO> rankInfo = getRankInfo(user.id);
                 smnrRankLbl.Text = getSoloRank(rankInfo);
                 seriesInfoLbl.Text = getSeriesInfo(rankInfo);
-               }   
+            }
         }
 
         private void smnrNameInput_KeyDown(object sender, KeyEventArgs e) // Click Fetch on Enter press
@@ -250,3 +250,4 @@ namespace API_Testing
 
 
     }
+}

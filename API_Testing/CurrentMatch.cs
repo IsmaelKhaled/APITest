@@ -93,7 +93,7 @@ namespace API_Testing
                             using (WebClient wc = new WebClient())
                             {
                                 wc.DownloadFile("http://ddragon.leagueoflegends.com/cdn/" + Form1.league_version + "/img/champion/" + champname + ".png", "C:\\Users\\Ismael\\Documents\\Visual Studio 2013\\Projects\\API_Testing\\API_Testing\\images\\champicons\\" + champname + ".png");
-                                champIcon2.Add("C:\\Users\\Ismael\\Documents\\Visual Studio 2013\\Projects\\API_Testing\\API_Testing\\champicons\\" + champname + ".png");
+                                champIcon2.Add("C:\\Users\\Ismael\\Documents\\Visual Studio 2013\\Projects\\API_Testing\\API_Testing\\images\\champicons\\" + champname + ".png");
                             }
                         }
                         perkStyles2.Add(@"C:\Users\Ismael\Documents\Visual Studio 2013\Projects\API_Testing\API_Testing\images\perkStyle\" + prtcpnt.perks.perkStyle.ToString() + ".png");
@@ -209,7 +209,7 @@ namespace API_Testing
                     List<string> perkLocs = new List<string>();
                     foreach (long perk in perks2[i - 6])
                     {
-                        perkLocs.Add(@"C:\Users\Ismael\Desktop\perk\" + perk + ".png");
+                        perkLocs.Add(@"C:\Users\Ismael\Documents\Visual Studio 2013\Projects\API_Testing\API_Testing\images\perk\" + perk + ".png");
                     }
                     for (int j = 1; j <= 6; j++)
                     {
