@@ -1,6 +1,8 @@
 # APITest
 A test GUI application to pull data from Riot API
 The programs currently consists of 2 main parts:
+
+
 => Form1 which is the main form, where you can type a summoner name and choose the region to search in and the program would
  fetch details about the summoner instantaneously and real-time.
  
