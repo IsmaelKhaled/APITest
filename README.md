@@ -1,4 +1,5 @@
 # APITest
+---------------------- THIS IS CURRENTLY NOT FUNCTIONAL AS THE RIOT API HAD SOME MAJOR UPDATE SINCE THEN ------------------
 A test GUI application to pull data from Riot API.
 
 The programs currently consists of 2 main parts:
@@ -8,3 +9,4 @@ The programs currently consists of 2 main parts:
 => CurrentMatch form where the current match played by the summoner you fetched can be seen, displaying all current players in the form of cards, each with their name, champion, rank and runes chosen for the match.
 
 Program coded entirely in C# on Microsoft Visual Studio on Windows by Ismael Khaled.
+
